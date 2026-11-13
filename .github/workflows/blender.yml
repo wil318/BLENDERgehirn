@@ -1,0 +1,77 @@
+name: Blender build (cloud)
+
+# Baut das Gehirnmodell headless mit Blender auf einem GitHub-Runner
+# und committet GLB, meta.json, Rendering, Icons und .blend zurück ins Repo.
+on:
+  workflow_dispatch:
+    inputs:
+      render:
+        description: "Cycles-Rendering (Vorschaubild + Icons) erzeugen"
+        type: boolean
+        default: true
+  push:
+    branches: [main]
+    paths: ["blender/build_brain.py"]
+
+permissions:
+  contents: write
+
+concurrency:
+  group: blender
+  cancel-in-progress: true
+
+env:
+  BLENDER_VERSION: "5.3.0"
+  BLENDER_SERIES: "5.3"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Cache Blender
+        id: cache
+        uses: actions/cache@v4
+        with:
+          path: ~/blender
+          key: blender-${{ env.BLENDER_VERSION }}-linux-x64
+
+      - name: Download Blender ${{ env.BLENDER_VERSION }}
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: |
+          mkdir -p ~/blender
+          curl -sSL "https://download.blender.org/release/Blender${BLENDER_SERIES}/blender-${BLENDER_VERSION}-linux-x64.tar.xz" \
+            | tar -xJ -C ~/blender --strip-components=1
+
+      - name: System libraries
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq libxi6 libxxf86vm1 libxfixes3 libxrender1 libxkbcommon0 libsm6 libegl1 libgl1 libglu1-mesa > /dev/null
+
+      - name: Build model
+        run: |
+          ARGS=""
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ] && [ "${{ inputs.render }}" = "false" ]; then ARGS="--no-render"; fi
+          ~/blender/blender -b --factory-startup --python-exit-code 1 --python blender/build_brain.py -- $ARGS 2>&1 | tee build.log
+          ls -la web/models web/img web/icons blender
+
+      - name: Upload outputs
+        uses: actions/upload-artifact@v4
+        with:
+          name: brain-build
+          path: |
+            web/models/
+            web/img/
+            web/icons/
+            build.log
+
+      - name: Commit outputs
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898729+github-actions[bot]@users.noreply.github.com"
+          git add web/models web/img web/icons blender/brain.blend
+          if git diff --cached --quiet; then echo "Keine Änderungen"; exit 0; fi
+          git commit -m "Blender-Build: Modell, Rendering und Icons aktualisiert [skip ci]"
+          git push
