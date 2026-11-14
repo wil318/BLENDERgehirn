@@ -178,7 +178,7 @@ function setup(gltf) {
     const m = new THREE.MeshPhysicalMaterial({
       name: src.name, color: src.color.clone(), roughness: isLiquor ? 0.12 : Math.max(0.42, src.roughness ?? 0.5), metalness: 0,
       sheen: isLiquor ? 0 : 0.35, sheenRoughness: 0.5, sheenColor: new THREE.Color('#ffe6dc'),
-      clearcoat: src.name === 'Auge' || src.name === 'Iris' || isLiquor ? 0.8 : 0.08, clearcoatRoughness: 0.35,
+      clearcoat: src.name === 'Auge' || src.name === 'Iris' || src.name === 'Pupille' || isLiquor ? 0.8 : 0.08, clearcoatRoughness: 0.35,
       emissive: src.emissive?.clone() ?? new THREE.Color(0), emissiveIntensity: src.emissiveIntensity ?? 1,
       transparent: isLiquor, opacity: isLiquor ? 0.55 : 1, depthWrite: !isLiquor,
     });
@@ -215,7 +215,7 @@ function setup(gltf) {
       u.off.set(Math.sign(groupBoxes[g].getCenter(new THREE.Vector3()).x) * ox, oy, oz);
     } else if (n === 'Kleinhirn') u.off.set(0, -2.2, 3.6);
     else if (['Mittelhirn', 'Bruecke', 'Medulla', 'Rueckenmark'].includes(n)) u.off.set(0, -3.2, 0.6);
-    else if (/^(Auge|Iris)_/.test(n)) u.off.set(side * 0.6, -0.4, -3.2);
+    else if (/^(Auge|Iris|Pupille)_/.test(n)) u.off.set(side * 0.6, -0.4, -3.2);
     else if (/_(L|R)$/.test(n) && !n.startsWith('Sehstrahlung')) u.off.set(side * 0.9, 0, 0);
     else if (n.startsWith('Sehstrahlung')) u.off.set(side * 1.2, 0, 0.4);
   }

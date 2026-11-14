@@ -626,7 +626,8 @@ M = {
     "opt": make_mat("Sehbahn", "#ffe066", rough=0.45, emit=0.15),
     "rad": make_mat("Sehstrahlung", "#ffd23f", rough=0.45, emit=0.1),
     "eye": make_mat("Auge", "#f3f1ea", rough=0.25, coat=0.6),
-    "iris": make_mat("Iris", "#2f7fc1", rough=0.3, coat=0.8),
+    "iris": make_mat("Iris", "#3f9a55", rough=0.3, coat=0.8),
+    "pupil": make_mat("Pupille", "#030303", rough=0.15, coat=1.0),
 }
 
 # Hirnstamm
@@ -702,6 +703,9 @@ for tag, s in (("L", -1), ("R", 1)):
     iris = blob((ex, ey + 1.1, ez), (0.55, 0.16, 0.55), subdiv=3, amp=0.0)
     add(f"Auge_{tag}", eye, M["eye"], "Sehbahn")
     add(f"Iris_{tag}", iris, M["iris"], "Sehbahn")
+    # Pupille: kleine schwarze Scheibe mittig auf der Iris (Vorderkante bündig mit der Irisfläche)
+    pupil = blob((ex, ey + 1.25, ez), (0.24, 0.07, 0.24), subdiv=3, amp=0.0)
+    add(f"Pupille_{tag}", pupil, M["pupil"], "Sehbahn")
     opt_parts.append(tube([(ex, ey - 1.0, ez + 0.2), (s * 2.6, 5.4, -3.6), (s * 1.3, 3.5, -2.7), (s * 0.3, 2.5, -2.42)], 0.2, samples=40, ring=14)[:2])
     opt_parts.append(tube([(s * 0.3, 2.3, -2.38), (s * 1.3, 1.0, -2.0), (s * 1.9, -0.4, -1.4), LGN[tag]], 0.14, 0.11, samples=40, ring=12)[:2])
     opt_parts.append(blob(LGN[tag], (0.28, 0.35, 0.22), subdiv=3, amp=0.0))

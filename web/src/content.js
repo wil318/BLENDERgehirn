@@ -200,7 +200,7 @@ export const ANNOTATIONS = [
   // ---------------------------------------------------------------- Sehbahn
   {
     id: 'auge', title: 'Augen', kicker: 'Bulbus oculi', color: '#f3f1ea', layer: 'outer',
-    meshes: ['Auge_', 'Iris_'], anchor: 'Auge_L',
+    meshes: ['Auge_', 'Iris_', 'Pupille_'], anchor: 'Auge_L',
     text: 'Die Netzhaut ist genau genommen ein ausgelagerter Teil des Gehirns: Schon hier verarbeiten mehrere Nervenzellschichten das Bild, bevor es über den Sehnerv weitergeht.',
     facts: [['Durchmesser', '≈ 2,4 cm'], ['Fotorezeptoren', '≈ 120 Mio. Stäbchen, 6 Mio. Zapfen'], ['Maßstab', 'Lage vereinfacht']],
   },
