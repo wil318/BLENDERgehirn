@@ -1,7 +1,7 @@
 // Service Worker: App-Shell + Modell offline verfügbar, CDN-Bibliotheken dauerhaft gecacht.
 // Eigene Dateien: erst Netz (immer aktuell), bei Offline aus dem Cache.
 // CDN (three.js, Draco, Schriften): erst Cache (versioniert, ändert sich nie).
-const VERSION = 'gehirn-v3';
+const VERSION = 'gehirn-v4';
 const SHELL = [
   './', 'index.html', 'manifest.webmanifest', 'src/style.css', 'src/main.js', 'src/content.js',
   'models/brain.glb', 'models/meta.json', 'icons/icon-192.png', 'icons/icon-512.png', 'icons/icon-180.png', 'lmg-tech-logo.png',

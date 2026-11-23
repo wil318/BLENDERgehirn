@@ -84,3 +84,10 @@ Viewer-Korrekturen nach Test im Browser:
 - Technik (nur Frontend, kein Neubau des Modells nötig): Stange (Lathe-Geometrie), roter Kanal (Zylinder, Stangendicke) entlang einer geraden Bahn, Beschriftungen für Eintritt/Austritt. Bahn in Blender-Koordinaten: x = −3,6 + 0,253·(z + 4,3), y = 4,8 + 0,0723·(z + 4,3). Das Gehirn ist das allgemeine Modellgehirn, nicht das von Gage.
 - `sw.js`: `VERSION` → `gehirn-v3`.
 - **Offen**: Lage des Kanals im Viewer prüfen (läuft er im linken Stirnlappen? Abstand zur motorischen Rinde und zum Broca-Areal); bei Bedarf Bahn (`GAGE_P0`, `GAGE_D`) in `web/src/main.js` nachjustieren.
+
+### Fall Gage – Schülerfassung
+- Zweite Fassung desselben Gage-Rundgangs für die Arbeit mit dem Arbeitsblatt: Aufruf mit `?gage=aufgabe` (z. B. `https://wil318.github.io/BLENDERgehirn/?gage=aufgabe`). Startet direkt im Fall Gage.
+- Gleiche 9 Stationen, gleiche Reihenfolge, gleiche Darstellung (Stange, Kanal, Markierungen, Leuchtbahnen) – die Stationsnummern auf dem Arbeitsblatt stimmen in beiden Fassungen.
+- Ohne Erklärungen und ohne Einordnung (*Gesichert/Umstritten/…*): Stationen 2–7 enthalten nur Material, *Beobachte*-Aufträge und Fragen; Station 8 (Modellkritik) nur Leitfragen. Damit beantwortet das Modell die Aufgaben 3–6 nicht mehr selbst.
+- Ohne Zusatz in der Adresse bleibt alles wie bisher (Vollfassung mit Erklärungen, z. B. zur Besprechung).
+- Umsetzung: `GAGE_TOUR_AUFGABE` in `web/src/content.js` (Überschreibungen von Text/Hinweisen pro Station), Umschaltung in `web/src/main.js`. `sw.js`: `VERSION` → `gehirn-v4`.

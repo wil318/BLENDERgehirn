@@ -3,3 +3,6 @@ dist/
 *.blend1
 .DS_Store
 build.log
+
+# Nur lokal (nicht hochladen): Arbeitsblätter
+lokal/

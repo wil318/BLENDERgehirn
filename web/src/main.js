@@ -10,7 +10,7 @@ import { OutlinePass } from 'three/addons/postprocessing/OutlinePass.js';
 import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
 import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
 import { computeBoundsTree, acceleratedRaycast } from 'three-mesh-bvh';
-import { ANNOTATIONS, GROUPS, TOUR, GAGE_TOUR, GAGE_TAGS } from './content.js';
+import { ANNOTATIONS, GROUPS, TOUR, GAGE_TOUR, GAGE_TOUR_AUFGABE, GAGE_TAGS } from './content.js';
 
 THREE.BufferGeometry.prototype.computeBoundsTree = computeBoundsTree;
 THREE.Mesh.prototype.raycast = acceleratedRaycast;
@@ -24,6 +24,8 @@ const STEP_SECONDS = 12, GAGE_STEP_SECONDS = 24;
 let stepSeconds = STEP_SECONDS;
 let tour = TOUR;      // aktiver Rundgang (normal oder Fall Gage)
 let mode = 'tour';
+// Schülerfassung des Falls Gage: index.html?gage=aufgabe (Stationen ohne Erklärungen)
+const GAGE_AUFGABE = new URLSearchParams(location.search).get('gage') === 'aufgabe';
 
 // Geräteklasse: Tablets/Handys bekommen weniger Nachbearbeitung, damit es flüssig bleibt
 const TOUCH = matchMedia('(pointer: coarse)').matches;
@@ -226,6 +228,7 @@ function setup(gltf) {
   buildUI();
   computeHome();
   goToStep(0, { instant: true });
+  if (GAGE_AUFGABE) setMode('gage');
   // Einflug
   camera.position.copy(state.flight.toPos).sub(state.flight.toTarget).multiplyScalar(2.2).add(state.flight.toTarget);
   state.flight.fromPos.copy(camera.position);
@@ -455,7 +458,7 @@ function buildTimeline() {
 function setMode(m) {
   mode = m;
   const gage = m === 'gage';
-  tour = gage ? GAGE_TOUR : TOUR;
+  tour = gage ? (GAGE_AUFGABE ? GAGE_TOUR_AUFGABE : GAGE_TOUR) : TOUR;
   stepSeconds = gage ? GAGE_STEP_SECONDS : STEP_SECONDS;
   $('phase').classList.toggle('gage', gage);
   setChip('modeBtn', gage);

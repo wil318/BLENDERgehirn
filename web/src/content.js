@@ -297,7 +297,7 @@ export const FACTS_GLOBAL = { mass: '≈ 1,4 kg', neurons: '≈ 86 Mrd.', energy
 // =====================================================================
 export const GAGE_TAGS = {
   gesichert: 'Gesichert', umstritten: 'Umstritten', unbekannt: 'Nicht bekannt',
-  deutung: 'Deutung', modell: 'Modell', frage: 'Frage',
+  deutung: 'Deutung', modell: 'Modell', frage: 'Frage', beobachte: 'Beobachte',
 };
 
 export const GAGE_TOUR = [
@@ -400,3 +400,69 @@ export const GAGE_TOUR = [
     gage: { rod: null, canal: 1, marks: [] },
   },
 ];
+
+// =====================================================================
+// Fall Phineas Gage – Schülerfassung (Aufruf: index.html?gage=aufgabe)
+// Gleiche Stationen, gleiche Reihenfolge und Darstellung wie GAGE_TOUR,
+// aber ohne Erklärungen und ohne Einordnung (gesichert/umstritten …):
+// Die Stationen liefern Material und Beobachtungsaufträge, die Antworten
+// erarbeiten die Schülerinnen und Schüler auf dem Arbeitsblatt.
+// =====================================================================
+const GAGE_AUFGABE_TEXTE = {
+  'g-unfall': {
+    notes: [['modell', 'Die Stange ist in Originalgröße gezeigt – im Bild ist nur ein Teil von ihr zu sehen.']],
+  },
+  'g-weg': {
+    text: 'Die Stange drang unter dem linken Wangenknochen ein und trat oben am Schädel wieder aus. Das Modell zeigt ihren Weg als roten Kanal.',
+    notes: [
+      ['beobachte', 'Drehe das Modell (mit der Maus ziehen) und betrachte den Kanal von vorn, von der Seite und von oben.'],
+      ['frage', 'Durch welchen Teil des Gehirns verläuft der Kanal? Auf welcher Seite?'],
+    ],
+  },
+  'g-schaden': {
+    text: 'Nach einer Computerrechnung (Van Horn et al. 2012) wurden etwa 4 % der Hirnrinde und etwa 11 % der Nervenfasern (weiße Substanz) zerstört.',
+    notes: [['frage', 'Welcher Bereich ist markiert? Wie groß ist er im Vergleich zum ganzen Gehirn?']],
+  },
+  'g-bewegen': {
+    kicker: 'Motorische Rinde',
+    text: 'Markiert ist die motorische Rinde. Die Leuchtpunkte zeigen den Weg der Bewegungsbefehle zum Rückenmark.',
+    notes: [
+      ['beobachte', 'Wo liegt die motorische Rinde im Vergleich zum roten Kanal?'],
+      ['frage', 'Was bedeutet das für Gages Fähigkeit, sich zu bewegen?'],
+    ],
+  },
+  'g-sprache': {
+    kicker: 'Broca- und Wernicke-Areal',
+    text: 'Markiert sind das Broca-Areal und das Wernicke-Areal. Die Leuchtpunkte zeigen die Verbindung zwischen beiden.',
+    notes: [
+      ['beobachte', 'Welches der beiden Areale liegt näher am Kanal?'],
+      ['frage', 'Was folgt daraus für Gages Sprechen und Sprachverstehen?'],
+    ],
+  },
+  'g-sinne': {
+    kicker: 'Hör-, Seh- und Fühlrinde',
+    text: 'Markiert sind Hörrinde, Fühlrinde und Sehrinde. Die Leuchtpunkte zeigen die Hörbahnen.',
+    notes: [
+      ['beobachte', 'Wo liegen diese Bereiche im Vergleich zum Kanal?'],
+      ['frage', 'Konnte Gage nach dem Unfall vermutlich hören, sehen und fühlen? Begründe.'],
+    ],
+  },
+  'g-gefuehl': {
+    kicker: 'Stirnlappen',
+    text: 'Markiert sind der Stirnlappen und die Amygdala (ein Teil des limbischen Systems).',
+    notes: [
+      ['beobachte', 'Welcher der markierten Bereiche wird vom Kanal getroffen?'],
+      ['frage', 'Welche Aufgaben hat der Stirnlappen? Wie passt das zu Gages Veränderung (M1)?'],
+    ],
+  },
+  'g-kritik': {
+    notes: [
+      ['frage', 'Wessen Gehirn zeigt das Modell?'],
+      ['frage', 'Woher weiß man, wo der Kanal verläuft – wurde er gemessen oder berechnet?'],
+      ['frage', 'Sind Lage und Größe der Areale bei allen Menschen gleich?'],
+      ['frage', 'Auf wie vielen Berichten beruht unser Wissen über Gage (Station 9)?'],
+      ['frage', 'Welche Schlüsse darfst du aus dem Modell ziehen – und welche nicht?'],
+    ],
+  },
+};
+export const GAGE_TOUR_AUFGABE = GAGE_TOUR.map((s) => ({ ...s, ...(GAGE_AUFGABE_TEXTE[s.id] || {}) }));

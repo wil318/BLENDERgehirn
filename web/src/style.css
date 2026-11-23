@@ -354,6 +354,7 @@ html, body { overscroll-behavior: none; -webkit-user-select: none; user-select: 
 .note.deutung b { color: #c3a8ff; }
 .note.modell b { color: #ff9a8c; }
 .note.frage b { color: #6fb8ee; }
+.note.beobachte b { color: #ffd166; }
 .phase-notes ul.src { margin: 6px 0 0; padding: 0 0 0 18px; font-size: 12.5px; line-height: 1.5; color: #c3d0e2; }
 .phase-notes ul.src li { margin: 0 0 6px; }
 .phase-notes ul.src a { color: #8cc4f5; }
